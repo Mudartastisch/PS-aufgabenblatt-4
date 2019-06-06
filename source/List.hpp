@@ -118,9 +118,9 @@ class List {
   	/* Test inequality to to List (Value comparison) */
     //TODO: operator!= (Aufgabe 4.7)
 
-  	/* ... */
+  	/* Destructor */
     ~List() {
-  		//TO IMPLEMENT PROPERLY
+  		clear();
     }
 
   	/* get first element of List */
@@ -137,7 +137,9 @@ class List {
 
     /* remove all elements from list, clear storage */
     void clear() {
-  		////not implemented yet
+  		while(first_ != nullptr){
+        pop_back();
+      }
     }
 
     /* insert at position i */
@@ -161,10 +163,11 @@ class List {
     void push_back(T const& element) {
   		ListNode<value_type>* new_node = new ListNode<value_type>(element); 
       ListNode<value_type>* last = first_; 
-      new_node->next = nullptr; //will be new end
+      new_node->next = nullptr; //will be new end, is default... but sanity
       if (first_ == nullptr) { //if the List is empty
         new_node->prev = nullptr;  //set prev and next null
         first_ = new_node; //and make it Head
+        last_ = new_node;
         return; //leave, nothing else to do
       } 
       while (last->next != nullptr) {//else go to the last_ node

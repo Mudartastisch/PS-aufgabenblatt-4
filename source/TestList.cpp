@@ -67,8 +67,8 @@ TEST_CASE ("should be empty after clearing "){
     list.push_front(2);
     list.push_front(3);
     list.push_front(4);
-    //list.clear();
-    REQUIRE(list.empty() == false);
+    list.clear();
+    REQUIRE(list.empty());
 }
 
 
