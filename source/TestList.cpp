@@ -71,6 +71,43 @@ TEST_CASE ("should be empty after clearing "){
     REQUIRE(list.empty());
 }
 
+TEST_CASE("Iterator Tests"){
+    List<Circle>circle_list;
+    Circle one(Vec2(0.0f,0.0f), 1.0f);
+    circle_list.push_back(one);
+    auto c_it = circle_list.begin();
+    REQUIRE(c_it->getRadius() == 1);
+    
+    Circle two(Vec2(0.0f,0.0f), 2.0f);
+    circle_list.push_back(two);
+    c_it++;
+    REQUIRE(c_it.operator*().getRadius() == 2);
+
+    Circle three(Vec2(0.0f,0.0f), 3.0f);
+    circle_list.push_back(three);
+    ++c_it;
+    REQUIRE(c_it->getRadius() == 3);
+
+    c_it = circle_list.begin();
+    auto c_itt = circle_list.begin();
+    REQUIRE(c_it.operator==(c_itt));
+    c_it++;
+    REQUIRE(c_it.operator==(c_itt) == false);
+    REQUIRE(c_it.operator!=(c_itt));
+}
+
+TEST_CASE("should be an empty range after default construction"){
+    List<int> list;
+    auto b = list.begin();
+    auto e = list.end();
+    REQUIRE (b == e);
+}
+
+TEST_CASE("provide access to the first element with begin"){
+    List<int>list;
+    list.push_front(42);
+    REQUIRE(42 == *list.begin());
+}
 
 
 int main(int argc, char *argv[])

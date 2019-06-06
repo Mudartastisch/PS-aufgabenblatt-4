@@ -31,39 +31,46 @@ struct ListIterator {
   using difference_type   = ptrdiff_t;
   using iterator_category = std::bidirectional_iterator_tag;
 
+  ListNode<value_type>* itr;
 
-  /* DESCRIPTION  operator*() */
-  T&  operator*()  const {
-  	//not implemented yet
-  	return {};
+  ListIterator(): itr(nullptr) {}
+  ListIterator(ListNode<value_type>* ptr): itr(ptr){}
+
+  /* returns the reference to the iterator object */ 
+  reference  operator*()  const {
+    assert(itr != nullptr);
+    return itr->value;
   } 
 
-  /* DESCRIPTION  operator->() */
-  T* operator->() const {
-  	//not implemented yet
-  	return nullptr;
+  /* returns the pointer of iteractor object */
+  pointer operator->() const {
+  	  	assert(itr != nullptr);
+        return pointer(itr);
   }
 
-  /* increments interator by 1 */
+  /* increments interator pre usage */
   ListIterator<T>& operator++() {
-  	//not implemented yet
-  	return {};
+  	assert(itr != nullptr);
+    itr = itr->next;
+    return *this;
   } //PREINCREMENT
 
-  /* increments interator by argument */
-  ListIterator<T> operator++(int) {
-  	//not implemented yet
-  	return {};
+  /* increments interator post usage */
+  ListIterator<T> operator++(int i) {
+  	assert(itr != nullptr);
+    ListIterator tmp(*this);
+    itr = itr->next;
+    return tmp;
   } //POSTINCREMENT (signature distinguishes)
 
   /* tests equality to ListIterator x (value comparison) */
   bool operator==(ListIterator<T> const& x) const {
-  	//not implemented yet
+  	return itr == x.itr;
   }
 
   /* tests inequality to ListIterator x (value comparison) */
   bool operator!=(ListIterator<T> const& x) const {
-  	//not implemented yet
+  	return itr != x.itr;
   }
 
   /* returns the next node or nullptr if it is the back*/
@@ -125,14 +132,23 @@ class List {
 
   	/* get first element of List */
     ListIterator<T> begin() {
-  		////not implemented yet
-    	return ListIterator<T>{};
+      if(first_ != nullptr){
+        return iterator(first_);
+      }
+      else{
+        return nullptr;
+      }
+    	
     }
 
   	/* get last element of List */
     ListIterator<T> end() {
-  		////not implemented yet
-    	return ListIterator<T>{};
+      if(last_ != nullptr){
+        return iterator(first_);
+      }
+      else{
+        return nullptr;
+      }
     }
 
     /* remove all elements from list, clear storage */
