@@ -17,7 +17,7 @@ struct ListNode {
   T         value = T();
   ListNode* prev = nullptr;
   ListNode* next = nullptr;
-
+  ListNode(){}
   ListNode(T input):value(input){}
   ListNode(T input, ListNode* parent, ListNode* child): value(input), prev(parent), next(child){}
 };
@@ -145,14 +145,34 @@ class List {
   	/* reverse order of List */
     //TODO: member function reverse
 
-    /* put element at first position, edit previous first */
-    void push_front(T const& element) {
-  		//not implemented yet
+    /* put element at first position, edit possible previous first */
+    void push_front(value_type const& element) {
+      ListNode<value_type>* new_node = new ListNode<value_type>(element); 
+      new_node->next = first_; 
+      new_node->prev = nullptr;   
+      if (first_ != nullptr) {
+        first_->prev = new_node; 
+      }
+      first_ = new_node;
+      updateLast();
     }
 
     /* add element to end of List, change previous last element */
     void push_back(T const& element) {
-  		//not implemented yet
+  		ListNode<value_type>* new_node = new ListNode<value_type>(element); 
+      ListNode<value_type>* last = first_; 
+      new_node->next = nullptr; //will be new end
+      if (first_ == nullptr) { //if the List is empty
+        new_node->prev = nullptr;  //set prev and next null
+        first_ = new_node; //and make it Head
+        return; //leave, nothing else to do
+      } 
+      while (last->next != nullptr) {//else go to the last_ node
+        last = last->next; 
+      } 
+      last->next = new_node;
+      new_node->prev = last;
+      last_ = new_node; //update variable
     }
 
     /* remove first element, edit second element */
@@ -169,21 +189,24 @@ class List {
 
   	/* get first element */
     T& front() {
-    	assert(!empty());
-  		//not implemented yet
-    	
-    	return T(); //<- obviously wrong because of 
-    				// returned reference to tmp-Object
+    	assert(!empty());    	
+    	return reference(first_->value);
     }
 
   	/* get last element */
     T& back() {
-    	assert(!empty());
+    	assert(!empty());    	
+    	return reference(last_->value);
+    }
 
-    	//not implemented yet
-
-    	return T(); //<- obviously wrong because of
-    				// returned reference to tmp-Object
+    /* utility to make sure pushFront updates all variales*/
+    void updateLast(){
+      ListNode<value_type>* last = new ListNode<value_type>();
+      last = first_; 
+      while (last->next != NULL) {
+        last = last->next; 
+      }
+      last_ = last;        
     }
 
   	/* return if List is empty */
@@ -196,7 +219,7 @@ class List {
       return size_;
     };
 
-
+    /* utility to prove existence */
     bool exists() const{
       return true;
     }
