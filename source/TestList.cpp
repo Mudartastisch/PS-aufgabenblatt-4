@@ -8,8 +8,8 @@
 TEST_CASE("create empty List") {
     List<int> intList;
     List<char> charList;
-    REQUIRE(intList.exists() == true);
-    REQUIRE(charList.exists() == true);
+    REQUIRE(intList.exists());
+    REQUIRE(charList.exists());
 }
 
 TEST_CASE("create ListNodes && put in List && test empty()"){
@@ -17,7 +17,7 @@ TEST_CASE("create ListNodes && put in List && test empty()"){
     List<int> intList(one);
     REQUIRE(intList.empty() == false);
     List<char> charList;
-    REQUIRE(charList.empty() == true);
+    REQUIRE(charList.empty());
 }
 
 TEST_CASE("add an element with push_front"){
@@ -45,6 +45,30 @@ TEST_CASE("remove elements with popX"){
     list.push_back(42);
     list.push_back(43);
     list.push_back(44);
+    REQUIRE(42 == list.front());
+    list.pop_front();
+    REQUIRE(43 == list.front());
+    list.pop_back();
+    REQUIRE(43 == list.front());
+    REQUIRE(43 == list.back());
+    list.pop_back();
+    REQUIRE(list.empty());
+    list.push_front(42);
+    REQUIRE(42 == list.front());
+    REQUIRE(42 == list.back());
+    list.pop_front();
+    REQUIRE(list.empty());
+
+}
+
+TEST_CASE ("should be empty after clearing "){
+    List<int> list ;
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    //list.clear();
+    REQUIRE(list.empty() == false);
 }
 
 

@@ -155,7 +155,7 @@ class List {
       }
       first_ = new_node;
       updateLast();
-    }
+      }
 
     /* add element to end of List, change previous last element */
     void push_back(T const& element) {
@@ -173,18 +173,36 @@ class List {
       last->next = new_node;
       new_node->prev = last;
       last_ = new_node; //update variable
+
     }
 
     /* remove first element, edit second element */
     void pop_front() {
     	assert(!empty());
-  		//not implemented yet
+  		if(first_->next == nullptr){
+        first_ = nullptr;
+        last_ = nullptr;
+        return;
+      }
+      else{
+        first_->next->prev = nullptr;
+        first_ = first_->next;
+      }
     }
 
     /* remove last element, edit new last element */
     void pop_back() {
     	assert(!empty());
-		//not implemented yet
+      if(last_->prev == nullptr){
+        first_ = nullptr;
+        last_ = nullptr;
+        return;
+      }
+      else{
+        last_->prev->next = nullptr;
+        last_ = last_->prev;
+      }
+		  
     }
 
   	/* get first element */
@@ -206,7 +224,7 @@ class List {
       while (last->next != NULL) {
         last = last->next; 
       }
-      last_ = last;        
+      last_ = last;
     }
 
   	/* return if List is empty */
@@ -223,6 +241,19 @@ class List {
     bool exists() const{
       return true;
     }
+
+    /* debug utility */
+    void printList(){
+      ListNode<value_type>* node = new ListNode<value_type>();
+      ListNode<value_type>* last = new ListNode<value_type>();
+      cout<<"\nTraversal in forward direction \n";  
+      while (node != nullptr)  
+      {   
+        cout<<" "<<node->value<<" ";  
+        last = node;  
+        node = node->next;  
+      } 
+    }  
 
 
   private:
