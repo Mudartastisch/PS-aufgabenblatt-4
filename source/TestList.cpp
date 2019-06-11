@@ -140,6 +140,16 @@ TEST_CASE("copy constructor"){
     REQUIRE(list == list2);
 }
 
+TEST_CASE("insert"){
+    List<int> list ;
+    list.push_front(1);
+    list.push_front(2);
+    list.push_front(3);
+    list.push_front(4);
+    //ListIterator<int> it = new ListIterator(list.begin());
+    //REQUIRE(list == list2);
+}
+
 
 int main(int argc, char *argv[])
 {

@@ -200,6 +200,13 @@ class List {
 
     /* insert at position i */
     //TODO: member function insert
+    ListIterator<value_type> insert(ListNode<value_type> const& tooInsert, ListIterator<value_type> const& position){
+      position.itr->prev->next = tooInsert.operator*();
+      position.itr->prev = tooInsert.operator*();
+      tooInsert->prev = position.itr->prev;
+      tooInsert->next = position.itr.operator*();
+    }
+
   	/* reverse order of List */
     //TODO: member function reverse
 
