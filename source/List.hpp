@@ -105,7 +105,15 @@ class List {
     List(ListNode<T>* first): first_(first), last_(first){}
 
     /* Copy-Konstruktor using Deep-Copy semantics */
-    //TODO: Copy-Konstruktor using Deep-Copy semantics (Aufgabe 4.8)
+    List(List<value_type> const&  rhs){
+      first_ = new ListNode<value_type>(rhs.first_->value);
+      ListNode<value_type>* tooAdd = new ListNode<value_type>();
+      tooAdd = rhs.first_;
+      while (tooAdd->next != NULL) {
+        tooAdd = tooAdd->next;
+        push_back(tooAdd->value);
+      }
+    }
 
   	/* Move-Konstruktor */
     //TODO: Move-Konstruktor (Aufgabe 4.13)
@@ -121,9 +129,41 @@ class List {
 
   	/* Test equality to to List (Value comparison) */
     //TODO: operator== (Aufgabe 4.7)
+    bool operator==(List<value_type> const& rhs){
+      ListNode<value_type>* mainListNode = new ListNode<value_type>();
+      ListNode<value_type>* rhsListNode = new ListNode<value_type>();
+      mainListNode = first_;
+      rhsListNode = rhs.first_; 
+      while(mainListNode->next != NULL) {
+        if(mainListNode != NULL && rhsListNode != NULL && mainListNode->value == rhsListNode->value){
+          mainListNode = mainListNode->next;
+          rhsListNode = rhsListNode->next;
+        }
+        else{
+          return false;
+        }        
+      }
+      return true;
+    }
 
   	/* Test inequality to to List (Value comparison) */
-    //TODO: operator!= (Aufgabe 4.7)
+    bool operator!=(List<value_type> const& rhs){
+      ListNode<value_type>* mainListNode = new ListNode<value_type>();
+      ListNode<value_type>* rhsListNode = new ListNode<value_type>();
+      mainListNode = first_;
+      rhsListNode = rhs.first_; 
+      while(mainListNode->next != NULL) {
+        if(mainListNode != NULL && rhsListNode != NULL && mainListNode->value != rhsListNode->value){
+          return true;          
+        }
+        else{
+          mainListNode = mainListNode->next;
+          rhsListNode = rhsListNode->next;
+        } 
+      }
+      return false;   
+      
+    }
 
   	/* Destructor */
     ~List() {
@@ -265,7 +305,6 @@ class List {
     void printList(){
       ListNode<value_type>* node = new ListNode<value_type>();
       ListNode<value_type>* last = new ListNode<value_type>();
-      cout<<"\nTraversal in forward direction \n";  
       while (node != nullptr)  
       {   
         cout<<" "<<node->value<<" ";  
