@@ -208,7 +208,19 @@ class List {
     }
 
   	/* reverse order of List */
-    //TODO: member function reverse
+    void reverse(){
+      ListNode<value_type> *temp = nullptr;  
+      ListNode<value_type> *current = first_;        
+      while (current != nullptr){          
+          temp = current->prev;  
+          current->prev = current->next;  
+          current->next = temp;              
+          current = current->prev;  
+      }  
+      if(temp != nullptr ){
+        first_ = temp->prev;  
+      }
+    }
 
     /* put element at first position, edit possible previous first */
     void push_front(value_type const& element) {
@@ -310,14 +322,13 @@ class List {
 
     /* debug utility */
     void printList(){
-      ListNode<value_type>* node = new ListNode<value_type>();
-      ListNode<value_type>* last = new ListNode<value_type>();
+      ListNode<value_type>* node = first_;
       while (node != nullptr)  
       {   
-        cout<<" "<<node->value<<" ";  
-        last = node;  
+        cout<<" "<<node->value<<"\n";  
         node = node->next;  
       } 
+      cout<<"\n";
     }  
 
 

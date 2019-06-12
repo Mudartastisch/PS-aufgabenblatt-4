@@ -150,6 +150,26 @@ TEST_CASE("insert"){
     //REQUIRE(list == list2);
 }
 
+TEST_CASE("reverse internal"){
+    List<int> list ;
+    list.push_back(1);
+    list.push_front(2);
+    
+    list.reverse();
+    List<int> list2 ;
+    list2.push_front(2);
+    list2.push_front(1);
+    
+    REQUIRE(list == list2);
+    list.push_back(3);
+    list2.push_back(3);
+    REQUIRE(list == list2);
+    List<int> list3; 
+    list3.reverse();//empty
+    list3.push_front(1);
+    list3.reverse(); //single element
+}
+
 
 int main(int argc, char *argv[])
 {
