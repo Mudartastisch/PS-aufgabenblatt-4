@@ -116,7 +116,19 @@ class List {
     }
 
   	/* Move-Konstruktor */
-    //TODO: Move-Konstruktor (Aufgabe 4.13)
+    reference operator=(T x){ 
+      x.swap(*this);
+      return *this; 
+    }
+    void swap(reference);
+    friend void swap(reference lhs, reference rhs){ 
+      lhs.swap(rhs); 
+    }   
+    List(List<value_type>&& rhs):first_(rhs.first_), last_(rhs.last_) { 
+      rhs.first_= nullptr;
+      rhs.last_ = nullptr;
+    }
+
 
     //TODO: Initializer-List Konstruktor (4.14)
   	/* Initializer-List Konstruktor */
@@ -128,7 +140,6 @@ class List {
     //TODO: Assignment operator (Aufgabe 4.12)
 
   	/* Test equality to to List (Value comparison) */
-    //TODO: operator== (Aufgabe 4.7)
     bool operator==(List<value_type> const& rhs){
       ListNode<value_type>* mainListNode = new ListNode<value_type>();
       ListNode<value_type>* rhsListNode = new ListNode<value_type>();
@@ -311,9 +322,16 @@ class List {
     };
 
     /* returns number of elements in List */
-    std::size_t size() const{
+     std::size_t size(){
+       ListNode<value_type>* node = first_;
+      size_ = 0;
+      while (node != nullptr)  
+      {   
+        size_ = size_+1;
+        node = node->next;  
+      }
       return size_;
-    };
+    }
 
     /* utility to prove existence */
     bool exists() const{
